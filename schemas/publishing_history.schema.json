@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/publishing_history.schema.json",
+  "title": "publishing_history",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "content_id",
+          "attempted_at",
+          "result",
+          "idempotency_key"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^pub_[0-9a-z]{8,40}$"
+          },
+          "content_id": {
+            "type": "string",
+            "pattern": "^cnt_[0-9a-z]{8,40}$"
+          },
+          "attempted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "result": {
+            "enum": [
+              "success",
+              "failed",
+              "uncertain",
+              "blocked",
+              "duplicate"
+            ]
+          },
+          "mode": {
+            "enum": [
+              "human_approved",
+              "auto"
+            ]
+          },
+          "idempotency_key": {
+            "type": "string"
+          },
+          "zernio_post_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "platform_post_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "post_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "http_status": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "run_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

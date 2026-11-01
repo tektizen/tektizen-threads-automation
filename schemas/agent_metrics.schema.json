@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/agent_metrics.schema.json",
+  "title": "agent_metrics",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "agents"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "agents": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "trend_researcher",
+          "content_strategist",
+          "content_creator",
+          "quality_evaluator",
+          "fact_checker",
+          "content_editor",
+          "learning_analyst"
+        ]
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "executions",
+          "successes",
+          "failures"
+        ],
+        "properties": {
+          "executions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "successes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failures": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "last_execution_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "last_status": {
+            "enum": [
+              "success",
+              "failed",
+              null
+            ]
+          },
+          "last_error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total_tokens": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

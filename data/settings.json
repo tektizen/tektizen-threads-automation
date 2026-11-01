@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-01T10:58:09Z",
+  "approval": {
+    "mode": "human_approval",
+    "auto_publish_enabled_at": null,
+    "auto_publish_enabled_by": null
+  },
+  "publishing": {
+    "kill_switch": false,
+    "max_posts_per_run": 1,
+    "threads_account_id": null,
+    "threads_username": "tektizen",
+    "max_thread_posts": 6,
+    "repetition_threshold": 0.6
+  },
+  "ai": {
+    "model": "openrouter/free",
+    "temperature": 0.7,
+    "max_tokens": 1800,
+    "timeout_seconds": 90,
+    "max_requests_per_run": 20,
+    "max_retries": 2,
+    "agent_models": {}
+  },
+  "quality": {
+    "min_overall": 80,
+    "min_factuality": 90,
+    "min_brand": 90,
+    "max_refinement_rounds": 1
+  },
+  "generation": {
+    "items_per_daily_run": 1,
+    "default_tone": "santai tapi berilmu",
+    "enabled_formats": [
+      "single",
+      "thread",
+      "question",
+      "opinion",
+      "educational",
+      "storytelling",
+      "tools_recommendation",
+      "news_commentary"
+    ],
+    "topics": [
+      "AI untuk pekerja pejabat",
+      "AI untuk pelajar",
+      "AI untuk freelancer",
+      "AI untuk perniagaan kecil Malaysia",
+      "AI untuk content creator",
+      "Automasi kerja harian",
+      "Produktiviti digital"
+    ]
+  },
+  "research": {
+    "feeds": [
+      {
+        "name": "Google News — AI Malaysia (EN)",
+        "url": "https://news.google.com/rss/search?q=artificial+intelligence+Malaysia&hl=en-MY&gl=MY&ceid=MY:en",
+        "enabled": true
+      },
+      {
+        "name": "Google News — Kecerdasan Buatan (BM)",
+        "url": "https://news.google.com/rss/search?q=kecerdasan+buatan&hl=ms&gl=MY&ceid=MY:ms",
+        "enabled": true
+      },
+      {
+        "name": "TechCrunch — AI",
+        "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "enabled": true
+      },
+      {
+        "name": "The Verge — AI",
+        "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "enabled": true
+      },
+      {
+        "name": "SoyaCincau",
+        "url": "https://soyacincau.com/feed/",
+        "enabled": true
+      }
+    ],
+    "max_items_per_feed": 8,
+    "max_age_days": 7
+  }
+}

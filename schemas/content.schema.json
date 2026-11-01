@@ -1,0 +1,530 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/content.schema.json",
+  "title": "content",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "updated_at",
+          "status",
+          "format",
+          "topic",
+          "origin"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^cnt_[0-9a-z]{8,40}$"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "enum": [
+              "DRAFT",
+              "IDEA",
+              "RESEARCH",
+              "GENERATION",
+              "EVALUATION",
+              "REFINEMENT",
+              "PENDING_APPROVAL",
+              "READY_TO_PUBLISH",
+              "PUBLISHING",
+              "PUBLISHED",
+              "PUBLISH_UNCERTAIN",
+              "REJECTED",
+              "FAILED",
+              "ARCHIVED"
+            ]
+          },
+          "format": {
+            "enum": [
+              "single",
+              "thread",
+              "question",
+              "opinion",
+              "educational",
+              "storytelling",
+              "tools_recommendation",
+              "news_commentary"
+            ]
+          },
+          "topic": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          },
+          "angle": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string"
+          },
+          "instructions": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "origin": {
+            "enum": [
+              "scheduled",
+              "manual_workflow",
+              "studio"
+            ]
+          },
+          "idea_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "run_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "url",
+                "retrieved_at"
+              ],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "pattern": "^https?://"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "publisher": {
+                  "type": "string"
+                },
+                "published_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "retrieved_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "summary": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "draft": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "hook",
+                  "body",
+                  "cta",
+                  "posts"
+                ],
+                "properties": {
+                  "hook": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "cta": {
+                    "type": "string"
+                  },
+                  "posts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    }
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "original_draft": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "hook",
+                  "body",
+                  "cta",
+                  "posts"
+                ],
+                "properties": {
+                  "hook": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "cta": {
+                    "type": "string"
+                  },
+                  "posts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    }
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "version",
+                "created_at",
+                "author",
+                "draft"
+              ],
+              "properties": {
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                },
+                "draft": {
+                  "type": "object",
+                  "required": [
+                    "hook",
+                    "body",
+                    "cta",
+                    "posts"
+                  ],
+                  "properties": {
+                    "hook": {
+                      "type": "string"
+                    },
+                    "body": {
+                      "type": "string"
+                    },
+                    "cta": {
+                      "type": "string"
+                    },
+                    "posts": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 20,
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 500
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "stage",
+                "agent",
+                "status",
+                "started_at"
+              ],
+              "properties": {
+                "stage": {
+                  "type": "string"
+                },
+                "agent": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "success",
+                    "failed",
+                    "skipped"
+                  ]
+                },
+                "started_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "completed_at": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "format": "date-time"
+                },
+                "model": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "usage": {
+                  "type": [
+                    "object",
+                    "null"
+                  ]
+                },
+                "output": {},
+                "error": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "evaluation": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "overall_score": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "factuality_score": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "brand_score": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 100
+              },
+              "scores": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "fact_check_status": {
+                "enum": [
+                  "passed",
+                  "warnings",
+                  "failed",
+                  "not_run"
+                ]
+              },
+              "critical_fact_failure": {
+                "type": "boolean"
+              },
+              "repetition_similarity": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              },
+              "warnings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "code",
+                    "severity",
+                    "message",
+                    "resolved"
+                  ],
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "agent": {
+                      "type": "string"
+                    },
+                    "resolved": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              "suggestions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "approval": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "required": {
+                "type": "boolean"
+              },
+              "decision": {
+                "enum": [
+                  "approved",
+                  "rejected",
+                  null
+                ]
+              },
+              "decided_at": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "reason": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "approval_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "publishing": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "idempotency_key": {
+                "type": "string"
+              },
+              "zernio_post_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "platform_post_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "url": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "published_at": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date-time"
+              },
+              "attempts": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "last_error": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "content_hash": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

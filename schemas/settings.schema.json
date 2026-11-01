@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/settings.schema.json",
+  "title": "settings",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "approval",
+    "publishing",
+    "ai",
+    "quality",
+    "generation",
+    "research"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "approval": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "human_approval",
+            "auto_publish"
+          ]
+        },
+        "auto_publish_enabled_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "auto_publish_enabled_by": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "publishing": {
+      "type": "object",
+      "required": [
+        "kill_switch",
+        "max_posts_per_run"
+      ],
+      "properties": {
+        "kill_switch": {
+          "type": "boolean"
+        },
+        "max_posts_per_run": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "threads_account_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[A-Za-z0-9_-]{1,64}$"
+        },
+        "threads_username": {
+          "type": "string"
+        },
+        "max_thread_posts": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 20
+        },
+        "repetition_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ai": {
+      "type": "object",
+      "required": [
+        "model",
+        "temperature",
+        "max_tokens",
+        "timeout_seconds",
+        "max_requests_per_run"
+      ],
+      "properties": {
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "minimum": 64,
+          "maximum": 16000
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 300
+        },
+        "max_requests_per_run": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "agent_models": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "trend_researcher",
+              "content_strategist",
+              "content_creator",
+              "quality_evaluator",
+              "fact_checker",
+              "content_editor",
+              "learning_analyst"
+            ]
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "quality": {
+      "type": "object",
+      "required": [
+        "min_overall",
+        "min_factuality",
+        "min_brand",
+        "max_refinement_rounds"
+      ],
+      "properties": {
+        "min_overall": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "min_factuality": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "min_brand": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "max_refinement_rounds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      },
+      "additionalProperties": false
+    },
+    "generation": {
+      "type": "object",
+      "required": [
+        "items_per_daily_run",
+        "default_tone",
+        "enabled_formats"
+      ],
+      "properties": {
+        "items_per_daily_run": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "default_tone": {
+          "type": "string"
+        },
+        "enabled_formats": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "single",
+              "thread",
+              "question",
+              "opinion",
+              "educational",
+              "storytelling",
+              "tools_recommendation",
+              "news_commentary"
+            ]
+          }
+        },
+        "topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "research": {
+      "type": "object",
+      "required": [
+        "feeds",
+        "max_items_per_feed",
+        "max_age_days"
+      ],
+      "properties": {
+        "feeds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "url"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "pattern": "^https://"
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "max_items_per_feed": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50
+        },
+        "max_age_days": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,953 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/learning_memory.schema.json",
+  "title": "learning_memory",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "categories",
+    "history"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "categories": {
+      "type": "object",
+      "required": [
+        "brand_identity",
+        "audience_interests",
+        "preferred_styles",
+        "successful_hooks",
+        "weak_hooks",
+        "high_performing_topics",
+        "underperforming_topics",
+        "content_formats",
+        "rejection_feedback",
+        "editing_patterns",
+        "performance_insights",
+        "repetition_warnings",
+        "strategic_recommendations",
+        "lessons_learned"
+      ],
+      "properties": {
+        "brand_identity": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "audience_interests": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "preferred_styles": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "successful_hooks": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "weak_hooks": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "high_performing_topics": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "underperforming_topics": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "content_formats": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "rejection_feedback": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "editing_patterns": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "performance_insights": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "repetition_warnings": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "strategic_recommendations": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "lessons_learned": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "text",
+              "confidence",
+              "evidence_count",
+              "source",
+              "created_at",
+              "updated_at"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^mem_[0-9a-z]{8,40}$"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 500
+              },
+              "confidence": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ]
+              },
+              "evidence_count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "evidence_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "source": {
+                "enum": [
+                  "user",
+                  "learning_analyst",
+                  "system"
+                ]
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "updated_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "at",
+          "op",
+          "category",
+          "actor"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^mh_[0-9a-z]{8,40}$"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "op": {
+            "enum": [
+              "add",
+              "update",
+              "delete",
+              "reset"
+            ]
+          },
+          "category": {
+            "enum": [
+              "brand_identity",
+              "audience_interests",
+              "preferred_styles",
+              "successful_hooks",
+              "weak_hooks",
+              "high_performing_topics",
+              "underperforming_topics",
+              "content_formats",
+              "rejection_feedback",
+              "editing_patterns",
+              "performance_insights",
+              "repetition_warnings",
+              "strategic_recommendations",
+              "lessons_learned"
+            ]
+          },
+          "item_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "before": {},
+          "after": {},
+          "actor": {
+            "type": "string"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tektizen.local/schemas/approvals.schema.json",
+  "title": "approvals",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "updated_at",
+    "items"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "updated_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "created_at",
+          "content_id",
+          "action",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^apr_[0-9a-z]{8,40}$"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "content_id": {
+            "type": "string",
+            "pattern": "^cnt_[0-9a-z]{8,40}$"
+          },
+          "action": {
+            "enum": [
+              "approve",
+              "reject",
+              "edit_approve",
+              "regenerate",
+              "refine",
+              "archive"
+            ]
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000
+          },
+          "edited_posts": {
+            "oneOf": [
+              {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 20,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "actor": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "applied",
+              "rejected_invalid"
+            ]
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

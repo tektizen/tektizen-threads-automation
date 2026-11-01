@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Engine scratch state
+data/.locks/
+data/*.tmp
+data/.*.tmp
+
+# Frontend
+web/node_modules/
+web/dist/
+web/.env*.local
+
+# Secrets — never commit real values
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
