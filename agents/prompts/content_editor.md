@@ -39,9 +39,13 @@ Surgical and restrained. You respect the creator's work. If something already wo
   "quality": {"overall_score": 0, "issues": [], "suggestions": []},
   "fact_check": {"status": "...", "claims": [], "critical_failure": false},
   "min_overall": 80,
-  "sources": [{"url": "...", "title": "...", "summary": "..."}]
+  "facts": [{"id": 0, "text": "...", "source_url": "..."}],
+  "code_checks": [{"code": "INDONESIAN_VOCAB", "severity": "high", "message": "..."}],
+  "user_notes": "optional refinement instructions from the owner — follow them"
 }
 ```
+
+The draft is final Bahasa Melayu Malaysia text. Your output must stay in Bahasa Melayu Malaysia.
 
 ## Output Format
 

@@ -1,0 +1,49 @@
+name: Dashboard Command
+run-name: "cmd ${{ inputs.request_id }}"
+
+# The dashboard never writes to the repository directly. It dispatches this
+# workflow with a JSON command; the engine validates it against current state.
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: "JSON command from the dashboard"
+        type: string
+        required: true
+      request_id:
+        description: "Dashboard request ID (used to find this run)"
+        type: string
+        required: true
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-engine
+      - name: Apply command
+        id: cmd
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          TEKTIZEN_TRIGGER: dashboard
+          TEKTIZEN_ACTOR: ${{ github.actor }}
+          COMMAND_JSON: ${{ inputs.command }}
+        run: |
+          printf '%s' "$COMMAND_JSON" > "$RUNNER_TEMP/command.json"
+          python -m tektizen command --file "$RUNNER_TEMP/command.json"
+      - name: Commit results
+        if: always()
+        env:
+          REQUEST_ID: ${{ inputs.request_id }}
+        run: bash .github/scripts/commit-and-push.sh "Dashboard command ${REQUEST_ID//[^a-zA-Z0-9_-]/}"
+      - name: Trigger publishing
+        if: steps.cmd.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish-approved.yml --ref "${GITHUB_REF_NAME}"

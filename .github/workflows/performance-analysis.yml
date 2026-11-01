@@ -1,0 +1,29 @@
+name: Performance Analysis
+
+on:
+  schedule:
+    - cron: "0 14 * * *" # 22:00 Malaysia time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: performance-analysis
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-engine
+      - name: Collect metrics and update learning memory
+        env:
+          ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tektizen analyze
+      - name: Commit results
+        if: always()
+        run: bash .github/scripts/commit-and-push.sh "Performance analysis"

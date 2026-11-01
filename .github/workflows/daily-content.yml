@@ -1,0 +1,35 @@
+name: Daily Content Generation
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 08:00 Malaysia time (UTC+8)
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit generated drafts and run logs
+  actions: write  # trigger publishing when auto-publish is on
+
+concurrency:
+  group: daily-content
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-engine
+      - name: Generate content
+        id: gen
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -m tektizen generate --mode daily
+      - name: Commit results
+        if: always()
+        run: bash .github/scripts/commit-and-push.sh "Daily content run"
+      - name: Trigger publishing (auto-publish mode only)
+        if: steps.gen.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish-approved.yml --ref "${GITHUB_REF_NAME}"

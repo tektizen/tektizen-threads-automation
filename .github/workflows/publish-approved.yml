@@ -1,0 +1,41 @@
+name: Publish Approved Content
+
+on:
+  workflow_dispatch:
+    inputs:
+      content_id:
+        description: "Publish only this content ID (optional)"
+        type: string
+        required: false
+  schedule:
+    - cron: "15 */3 * * *" # fallback sweep every 3 hours; exits quietly if nothing is ready
+
+permissions:
+  contents: write
+
+# Only one publisher at a time. A queued run may be replaced by a newer one,
+# which is fine: every run publishes everything that is ready.
+concurrency:
+  group: tektizen-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-engine
+      - name: Publish
+        env:
+          ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+          IN_CONTENT_ID: ${{ inputs.content_id }}
+        run: |
+          if [ -n "$IN_CONTENT_ID" ]; then
+            python -m tektizen publish --content-id "$IN_CONTENT_ID"
+          else
+            python -m tektizen publish
+          fi
+      - name: Commit results
+        if: always()
+        run: bash .github/scripts/commit-and-push.sh "Publishing run"

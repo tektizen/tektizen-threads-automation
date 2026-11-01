@@ -1,0 +1,3 @@
+# Record-level JSON merge for concurrent workflow commits (see tektizen/merge.py).
+data/*.json merge=tektizen-json
+* text=auto eol=lf

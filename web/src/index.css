@@ -2,7 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Dark is the default theme; `.light` on <html> opts into light. */
+/* Dark is the default: index.html ships <html class="dark">; the theme toggle removes it. */
 :root {
   --radius: 0.625rem;
   --background: oklch(0.985 0 0);
@@ -26,11 +26,11 @@
   --input: oklch(0.91 0.005 260);
   --ring: oklch(0.55 0.15 165);
   --sidebar: oklch(0.97 0.003 260);
-  --chart-1: oklch(0.6 0.14 165);
-  --chart-2: oklch(0.6 0.15 250);
-  --chart-3: oklch(0.7 0.15 75);
-  --chart-4: oklch(0.6 0.18 330);
-  --chart-5: oklch(0.55 0.02 260);
+  --chart-1: #2a78d6;
+  --chart-2: #eb6834;
+  --chart-3: #1baf7a;
+  --chart-4: #eda100;
+  --chart-5: #e87ba4;
 }
 
 .dark {
@@ -55,11 +55,11 @@
   --input: oklch(0.31 0.008 260);
   --ring: oklch(0.74 0.14 165);
   --sidebar: oklch(0.18 0.006 260);
-  --chart-1: oklch(0.74 0.14 165);
-  --chart-2: oklch(0.7 0.13 250);
-  --chart-3: oklch(0.8 0.14 80);
-  --chart-4: oklch(0.7 0.16 330);
-  --chart-5: oklch(0.6 0.02 260);
+  --chart-1: #3987e5;
+  --chart-2: #d95926;
+  --chart-3: #199e70;
+  --chart-4: #c98500;
+  --chart-5: #d55181;
 }
 
 @theme inline {

@@ -70,7 +70,13 @@ Guarantees (`tektizen/storage.py`):
 - **Schema versions** → every file carries `schema_version`; newer-than-engine files are refused; migrations hook in `_migrate`.
 - **IDs and time** → prefixed, time-sortable IDs (`cnt_…`, `idea_…`); ISO 8601 UTC (`…Z`).
 
-Concurrency across workflows: every workflow that mutates `data/` shares one Actions `concurrency` group (`tektizen-data`, `cancel-in-progress: false`), so writers are serialised. Each workflow also rebases before pushing and retries the push a bounded number of times.
+Concurrency across workflows: a single shared Actions `concurrency` group was rejected, because GitHub keeps only **one pending run per group** and cancels the rest. Three quick approvals would lose the middle one. Instead:
+
+- Workflows run freely. `.github/scripts/commit-and-push.sh` commits, and if the push is rejected it runs `git pull --rebase` and retries (up to 5 times).
+- During the rebase, a custom Git merge driver (`tektizen/merge.py`, registered via `.gitattributes`) merges `data/*.json` **record by record** (by `id`). Concurrent additions are all kept. A record edited on both sides keeps the newer `updated_at`, and `agent_metrics` counters add their deltas. The merged result is schema-validated, and an invalid merge fails loudly instead of committing.
+- Publishing is the exception: it has its own `concurrency` group, so only one publisher ever runs. A replaced queued run is harmless because each run publishes everything that is ready.
+
+Verified with two real clones pushing concurrently (both sides' content and memory changes survive).
 
 ## Content lifecycle
 
@@ -87,19 +93,27 @@ Every stage appends a `stages[]` entry with the agent, model, token usage, struc
 
 ## Agents
 
-Seven agents, each a Markdown prompt plus a Python output validator:
+Eight agents, each a Markdown prompt plus a Python output validator. The design assumes **free models**: code does everything it can, and each agent gets one narrow job with real source text in front of it.
 
 | Agent | Input | Output contract |
 |---|---|---|
-| Trend Researcher | Real feed items (RSS) fetched in code | `ideas[]` with `source_urls` that must match fetched URLs |
+| Trend Researcher | Feed items + full article text fetched in code | `ideas[]` with `source_urls` (must be fetched URLs) and `facts[]` whose `quote` must appear in the source text (checked in code) |
 | Content Strategist | Ideas, recent content, memory | `briefs[]` (format, angle, hook strategy, key points) |
-| Content Creator | Brief, sources, memory | `hook/body/cta/posts[]` + `claims[]` |
-| Quality Evaluator | Draft, brief, recent hooks | 10 criterion scores, `overall_score`, `issues[]` |
-| Fact Checker | Draft, claims, sources | Per-claim verdicts, `critical_failure`, `factuality_score` |
-| Content Editor | Draft + both evaluations | Final draft or `changed: false` |
+| Content Creator | Brief, verified facts, memory | **English** master draft `hook/body/cta/posts[]` (≤380 chars/post) + `claims[]` → `fact_id` |
+| Malay Localizer | English draft + `config/style_examples.md` + recently approved posts | Casual Bahasa Melayu Malaysia, same posts and facts, ≤500 chars |
+| Quality Evaluator | BM draft, brief, recent hooks | 10 criterion scores (overall recomputed in code), `issues[]` |
+| Fact Checker | BM draft, verified facts | Per-claim verdicts; `critical_failure`, status, and score recomputed in code |
+| Content Editor | Draft + both evaluations + code checks | Final draft or `changed: false` |
 | Learning Analyst | Approvals, edits, performance | `add`-only memory operations with evidence IDs |
 
-Research uses real RSS feeds (configurable in settings) fetched by code, so the model never "searches" from memory. The researcher may only cite URLs that were fetched.
+Research (`tektizen/research.py`) is plain code, so the model never "searches" from memory:
+
+1. Fetch 13 free RSS feeds (official AI blogs, tech media, Malaysian outlets including Amanz in BM, and Google News MY) plus Hacker News via the Algolia API. All were verified reachable on 2026-11-01 and are editable in Settings.
+2. Filter general-tech feeds by AI keywords, drop items older than `max_age_days`, and dedupe by URL and title similarity, excluding sources already used.
+3. Score by source tier, recency, Malaysian relevance, practical value, and HN points. Google News links are down-weighted because they are redirects with no extractable text. Each publisher is capped at 2 items.
+4. Extract full article text (`trafilatura`) for the top 4 stories, so the model works from the article rather than a one-line summary.
+
+The researcher may only cite fetched URLs, and every fact must carry a quote that is found in that source's text.
 
 Code enforces what prompts ask for: post length ≤ 500, post count per format, source URL membership, Indonesian-vocabulary detection, repetition similarity against recent content, and confidence caps on learning by evidence count.
 
@@ -137,7 +151,7 @@ A static site cannot hold a secret. So:
 
 - **No secrets in the bundle.** Only non-secret `VITE_GITHUB_OWNER/REPO/BRANCH` are build-time config. OpenRouter and Zernio keys exist only as GitHub Actions Secrets.
 - **Reads:** GitHub REST Contents API (`/repos/{owner}/{repo}/contents/data/*.json`). Public repos need no token. Private repos use the viewer's token (below).
-- **Writes:** the dashboard never writes files. Every mutation is a command, sent as `workflow_dispatch` on `dashboard-command.yml` with a JSON payload (`approve`, `reject`, `edit_approve`, `regenerate`, `refine`, `archive`, `update_settings`, `memory_add/update/delete/reset`, `update_prompt`, `update_config`, `generate`, `reconcile_publish`). The workflow validates the payload against the current state, applies it with the same Python code and validation as the automation, commits, and triggers publishing when needed.
+- **Writes:** the dashboard never writes files. Every mutation is a command, sent as `workflow_dispatch` on `dashboard-command.yml` with a JSON payload (`approve`, `reject`, `edit_approve`, `regenerate`, `refine`, `archive`, `update_settings`, `memory_add/update/delete/reset`, `update_prompt`, `update_config`, `save_draft`, `submit_for_review`, `reconcile_publish`). Generation requests go to `manual-generation.yml` instead. The workflow validates the payload against the current state, applies it with the same Python code and validation as the automation, commits, and triggers publishing when needed.
 - **Viewer credential:** the user enters a **fine-grained personal access token scoped to this one repository** with `Actions: Read and write` and `Contents: Read-only`. It is entered at runtime and kept in `sessionStorage` (cleared when the tab closes). It is never bundled and never sent anywhere but `api.github.com`. Even if it leaked, it could not push code. It can only trigger the workflows, whose inputs are validated.
 - **Least privilege in workflows:** each workflow declares minimal `permissions:` (`contents: write` only where it commits, `actions: write` only where it dispatches another workflow).
 - **Upgrade path:** for multi-user or stricter setups, replace the PAT with a GitHub App and a small token-exchange function (e.g. a Cloudflare Pages Function). The command protocol stays the same.
@@ -147,9 +161,9 @@ A static site cannot hold a secret. So:
 | Phase | Status |
 |---|---|
 | 1. Foundation: structure, schemas, storage, settings, memory, prompts, docs | Done |
-| 2. Dashboard | Pending |
-| 3. AI engine (OpenRouter, agents, pipeline, learning) | Pending |
-| 4. GitHub integration (workflows, dashboard commands) | Pending |
-| 5. Zernio integration | Pending |
-| 6. Testing | Ongoing (foundation covered) |
-| 7. Deployment docs | Pending |
+| 2. Dashboard (10 sections, demo mode, responsive, dark/light) | Done |
+| 3. AI engine (OpenRouter, 8 agents, pipeline, learning) | Done (mocked tests; live quality depends on free models) |
+| 4. GitHub integration (7 workflows, dashboard commands, merge driver) | Done |
+| 5. Zernio integration (publish, threads, analytics, reconciliation) | Done (mocked tests; first live publish is the real check) |
+| 6. Testing | 117 Python tests; dashboard type-check, build, and demo-mode render |
+| 7. Deployment docs | Done: see `docs/SETUP.md` |

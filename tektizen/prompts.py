@@ -11,13 +11,14 @@ AGENTS = (
     "trend_researcher",
     "content_strategist",
     "content_creator",
+    "malay_localizer",
     "quality_evaluator",
     "fact_checker",
     "content_editor",
     "learning_analyst",
 )
 
-CONFIG_DOCS = ("brand_profile", "content_rules", "approval_policy")
+CONFIG_DOCS = ("brand_profile", "content_rules", "approval_policy", "style_examples")
 
 REQUIRED_SECTIONS = (
     "Role", "Objective", "Personality", "Responsibilities", "Rules",

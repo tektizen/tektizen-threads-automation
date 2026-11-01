@@ -1,0 +1,18 @@
+name: Set up TektiZen engine
+description: Python 3.11, dependencies, and the JSON merge driver
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+        cache: pip
+        cache-dependency-path: requirements.txt
+    - name: Install dependencies
+      shell: bash
+      run: pip install -r requirements.txt
+    - name: Register JSON merge driver
+      shell: bash
+      run: |
+        git config merge.tektizen-json.name "TektiZen record-level JSON merge"
+        git config merge.tektizen-json.driver "python -m tektizen merge-driver %O %A %B %P"

@@ -130,6 +130,9 @@
           "minimum": 0,
           "maximum": 5
         },
+        "allow_paid_models": {
+          "type": "boolean"
+        },
         "agent_models": {
           "type": "object",
           "propertyNames": {
@@ -137,6 +140,7 @@
               "trend_researcher",
               "content_strategist",
               "content_creator",
+              "malay_localizer",
               "quality_evaluator",
               "fact_checker",
               "content_editor",
@@ -235,6 +239,7 @@
       "properties": {
         "feeds": {
           "type": "array",
+          "maxItems": 40,
           "items": {
             "type": "object",
             "required": [
@@ -243,7 +248,8 @@
             ],
             "properties": {
               "name": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
               },
               "url": {
                 "type": "string",
@@ -251,9 +257,52 @@
               },
               "enabled": {
                 "type": "boolean"
+              },
+              "tier": {
+                "enum": [
+                  "official",
+                  "media",
+                  "malaysia",
+                  "community"
+                ]
+              },
+              "language": {
+                "enum": [
+                  "en",
+                  "ms"
+                ]
+              },
+              "ai_only": {
+                "type": "boolean"
               }
-            }
+            },
+            "additionalProperties": false
           }
+        },
+        "hn_enabled": {
+          "type": "boolean"
+        },
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "max_candidates": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 30
+        },
+        "fulltext_articles": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "fulltext_max_chars": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 8000
         },
         "max_items_per_feed": {
           "type": "integer",

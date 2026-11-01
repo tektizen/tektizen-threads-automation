@@ -1,0 +1,70 @@
+name: Manual Content Generation
+run-name: "Generate: ${{ inputs.topic || 'ideas' }} (${{ inputs.request_id || 'manual' }})"
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "content = write one post; ideas = research ideas only"
+        type: choice
+        options: [content, ideas]
+        default: content
+      topic:
+        description: "Topic (required for content)"
+        type: string
+        required: false
+      format:
+        description: "Content format"
+        type: choice
+        options: [single, thread, question, opinion, educational, storytelling, tools_recommendation, news_commentary]
+        default: single
+      tone:
+        description: "Tone (optional)"
+        type: string
+        required: false
+      instructions:
+        description: "Extra instructions (optional)"
+        type: string
+        required: false
+      request_id:
+        description: "Set by the dashboard to track this run"
+        type: string
+        required: false
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-engine
+      - name: Generate
+        id: gen
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          TEKTIZEN_TRIGGER: ${{ inputs.request_id && 'dashboard' || '' }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_TOPIC: ${{ inputs.topic }}
+          IN_FORMAT: ${{ inputs.format }}
+          IN_TONE: ${{ inputs.tone }}
+          IN_INSTRUCTIONS: ${{ inputs.instructions }}
+        run: |
+          if [ "$IN_MODE" = "ideas" ]; then
+            python -m tektizen generate --mode ideas
+          else
+            if [ -z "$IN_TOPIC" ]; then echo "::error::topic is required"; exit 1; fi
+            python -m tektizen generate --mode manual --topic "$IN_TOPIC" --format "$IN_FORMAT" \
+              --tone "$IN_TONE" --instructions "$IN_INSTRUCTIONS"
+          fi
+      - name: Commit results
+        if: always()
+        run: bash .github/scripts/commit-and-push.sh "Manual generation"
+      - name: Trigger publishing (auto-publish mode only)
+        if: steps.gen.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run publish-approved.yml --ref "${GITHUB_REF_NAME}"

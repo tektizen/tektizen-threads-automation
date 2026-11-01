@@ -1,0 +1,1 @@
+"""Publishing: safety gate + publisher."""

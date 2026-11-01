@@ -20,6 +20,13 @@
       ],
       "format": "date-time"
     },
+    "last_analysis_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
     "categories": {
       "type": "object",
       "required": [

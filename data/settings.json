@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-01T10:58:09Z",
+  "updated_at": "2026-11-01T12:10:17Z",
   "approval": {
     "mode": "human_approval",
     "auto_publish_enabled_at": null,
@@ -21,6 +21,7 @@
     "timeout_seconds": 90,
     "max_requests_per_run": 20,
     "max_retries": 2,
+    "allow_paid_models": false,
     "agent_models": {}
   },
   "quality": {
@@ -55,32 +56,129 @@
   "research": {
     "feeds": [
       {
-        "name": "Google News — AI Malaysia (EN)",
-        "url": "https://news.google.com/rss/search?q=artificial+intelligence+Malaysia&hl=en-MY&gl=MY&ceid=MY:en",
+        "name": "OpenAI News",
+        "url": "https://openai.com/news/rss.xml",
+        "tier": "official",
+        "language": "en",
         "enabled": true
       },
       {
-        "name": "Google News — Kecerdasan Buatan (BM)",
-        "url": "https://news.google.com/rss/search?q=kecerdasan+buatan&hl=ms&gl=MY&ceid=MY:ms",
+        "name": "Google AI Blog",
+        "url": "https://blog.google/innovation-and-ai/technology/ai/rss/",
+        "tier": "official",
+        "language": "en",
         "enabled": true
       },
       {
-        "name": "TechCrunch — AI",
+        "name": "Hugging Face Blog",
+        "url": "https://huggingface.co/blog/feed.xml",
+        "tier": "official",
+        "language": "en",
+        "enabled": true
+      },
+      {
+        "name": "GitHub Blog",
+        "url": "https://github.blog/feed/",
+        "tier": "official",
+        "language": "en",
+        "enabled": true,
+        "ai_only": true
+      },
+      {
+        "name": "TechCrunch AI",
         "url": "https://techcrunch.com/category/artificial-intelligence/feed/",
+        "tier": "media",
+        "language": "en",
         "enabled": true
       },
       {
-        "name": "The Verge — AI",
+        "name": "The Verge AI",
         "url": "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml",
+        "tier": "media",
+        "language": "en",
         "enabled": true
+      },
+      {
+        "name": "Ars Technica",
+        "url": "https://feeds.arstechnica.com/arstechnica/technology-lab",
+        "tier": "media",
+        "language": "en",
+        "enabled": true,
+        "ai_only": true
+      },
+      {
+        "name": "MIT Technology Review AI",
+        "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed",
+        "tier": "media",
+        "language": "en",
+        "enabled": true
+      },
+      {
+        "name": "Amanz",
+        "url": "https://cms.amanz.my/feed/",
+        "tier": "malaysia",
+        "language": "ms",
+        "enabled": true,
+        "ai_only": true
       },
       {
         "name": "SoyaCincau",
         "url": "https://soyacincau.com/feed/",
+        "tier": "malaysia",
+        "language": "en",
+        "enabled": true,
+        "ai_only": true
+      },
+      {
+        "name": "Lowyat.NET",
+        "url": "https://www.lowyat.net/feed/",
+        "tier": "malaysia",
+        "language": "en",
+        "enabled": true,
+        "ai_only": true
+      },
+      {
+        "name": "Google News — AI Malaysia",
+        "url": "https://news.google.com/rss/search?q=artificial+intelligence+Malaysia&hl=en-MY&gl=MY&ceid=MY:en",
+        "tier": "malaysia",
+        "language": "en",
+        "enabled": true
+      },
+      {
+        "name": "Google News — Kecerdasan Buatan",
+        "url": "https://news.google.com/rss/search?q=kecerdasan+buatan&hl=ms-MY&gl=MY&ceid=MY:ms",
+        "tier": "malaysia",
+        "language": "ms",
         "enabled": true
       }
     ],
+    "hn_enabled": true,
+    "keywords": [
+      "AI",
+      "artificial intelligence",
+      "kecerdasan buatan",
+      "ChatGPT",
+      "OpenAI",
+      "Gemini",
+      "Claude",
+      "Copilot",
+      "LLM",
+      "chatbot",
+      "automation",
+      "automasi",
+      "machine learning",
+      "generative",
+      "agent",
+      "prompt",
+      "Perplexity",
+      "DeepSeek",
+      "Llama",
+      "Qwen"
+    ],
     "max_items_per_feed": 8,
-    "max_age_days": 7
+    "max_age_days": 7,
+    "max_candidates": 12,
+    "fulltext_articles": 4,
+    "fulltext_max_chars": 2500
   }
 }

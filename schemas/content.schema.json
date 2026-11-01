@@ -521,6 +521,83 @@
               "string",
               "null"
             ]
+          },
+          "brief": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "text",
+                "source_url"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "quote": {
+                  "type": "string"
+                },
+                "source_url": {
+                  "type": "string"
+                },
+                "verified_quote": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "draft_en": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "hook",
+                  "body",
+                  "cta",
+                  "posts"
+                ],
+                "properties": {
+                  "hook": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string"
+                  },
+                  "cta": {
+                    "type": "string"
+                  },
+                  "posts": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "auto_publish": {
+            "type": "boolean"
+          },
+          "user_notes": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000
           }
         }
       }
