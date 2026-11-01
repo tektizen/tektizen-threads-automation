@@ -20,6 +20,7 @@ from integrations import zernio_client as zc
 from .. import storage
 from ..runs import RunRecorder
 from ..util import content_hash, new_id, utcnow_iso
+from ..settings import threads_account_id
 from . import gate
 
 
@@ -98,7 +99,7 @@ def publish_ready(rec: RunRecorder, settings: dict[str, Any], client: zc.ZernioC
             posts = list(item["draft"]["posts"])
 
         rec.info(f"{snapshot['id']}: publishing {len(posts)} post(s) to Threads ({mode})")
-        result = client.publish(posts, settings["publishing"]["threads_account_id"], key,
+        result = client.publish(posts, threads_account_id(settings) or "", key,
                                 metadata={"tektizen_content_id": snapshot["id"]})
         sent += 1
         _apply_result(rec, snapshot["id"], result, key, mode, stats)

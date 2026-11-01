@@ -60,7 +60,13 @@ Branch protection: do **not** require pull requests on `main`. The automation co
    ```
    66b2e19d8c3f5a7e9d0b1c2d  @tektizen  active=True  needs_reconnection=False
    ```
-3. Copy the ID. You'll paste it into the dashboard in step 7.
+3. Copy the ID, then save it in GitHub: repo **Settings → Secrets and variables → Actions → Variables** tab → **New repository variable**:
+
+   | Name | Value |
+   |---|---|
+   | `THREADS_ACCOUNT_ID` | the ID you copied |
+
+   It isn't a password (it's useless without the Zernio key), so a variable is fine. If you prefer, you can add it as a secret with the same name instead; both work.
 
 ---
 
@@ -106,10 +112,9 @@ The token stays in that browser tab only and is cleared when you close it. Keep 
 
 ## Step 7: Configure in the dashboard
 
-**Settings** page:
-1. **Publishing → Threads account ID:** paste the ID from step 4 → **Save publishing**.
-2. Check **Approval mode** is **OFF** (human approval). Leave it that way until you trust the output.
-3. Optional: **AI model**. `openrouter/free` picks any free model, so quality varies. After a few runs, look at **Automation Runs → Models** to see which free models produced good results, then pin one (a model ID ending in `:free`), either as default or just for the **Malay Localizer**.
+**Settings** page. No keys or IDs go here; those are all in GitHub from steps 3–4.
+1. Check **Automatic publishing** is **OFF** (human approval). Leave it that way until you trust the output.
+2. Optional: turn on **Show advanced settings** for the AI model and news sources. `openrouter/free` picks any free model, so quality varies. After a few runs, look at **Automation Runs → Models** to see which free models produced good results, then pin one (a model ID ending in `:free`), either as default or just for the **Malay Localizer**.
 
 Each save starts a "Dashboard Command" run. The **Activity** menu (top right) shows its progress, and the page refreshes when it finishes.
 
@@ -154,5 +159,5 @@ GitHub pauses scheduled workflows in repos with no activity for 60 days. The dai
 | "Could not send command" | Token missing, expired, or without **Actions: Read and write**. |
 | Generation run fails at OpenRouter | Check the key secret, the OpenRouter privacy setting, and whether the daily free-request limit was hit. |
 | Item stuck in "Needs reconciling" | The publish outcome was uncertain. Check Threads, then use **Reconcile** in the Approval Center. It's never retried automatically, to avoid double posting. |
-| Publishing blocked | Check the kill switch, the Threads account ID, and the max-posts-per-run setting. The run log names the exact reason. |
+| Publishing blocked | Check the kill switch, the `THREADS_ACCOUNT_ID` repository variable, and the max-posts-per-run setting. The run log names the exact reason. |
 | Performance shows "unavailable" | Your Zernio plan lacks the Analytics add-on. |

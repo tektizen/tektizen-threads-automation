@@ -17,12 +17,31 @@ import type { Settings as SettingsT } from '@/lib/types'
 
 type Section = 'publishing' | 'ai' | 'quality' | 'generation' | 'research'
 
+const ADVANCED_KEY = 'tz-settings-advanced'
+
+function readAdvanced() {
+  try {
+    return localStorage.getItem(ADVANCED_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
 export default function Settings() {
   const repo = useRepo()
   const { demo } = useData()
   const { send } = useCommands()
   const [draft, setDraft] = useState<SettingsT | null>(null)
   const [confirmAuto, setConfirmAuto] = useState(false)
+  const [advanced, setAdvanced] = useState(readAdvanced)
+  const toggleAdvanced = (on: boolean) => {
+    setAdvanced(on)
+    try {
+      localStorage.setItem(ADVANCED_KEY, on ? '1' : '0')
+    } catch {
+      /* preference just isn't remembered */
+    }
+  }
 
   useEffect(() => {
     if (repo) setDraft(structuredClone(repo.settings))
@@ -39,7 +58,17 @@ export default function Settings() {
 
   return (
     <>
-      <PageHeader title="Settings" description="Changes are sent as commands to GitHub Actions, validated by the engine, and committed to data/settings.json." />
+      <PageHeader title="Settings"
+        description="Changes are sent as commands to GitHub Actions, validated by the engine, and committed to data/settings.json. API keys are never set here; they live in GitHub Secrets."
+        actions={
+          <div className="flex items-center gap-2 rounded-lg border px-3 py-2">
+            <Switch id="advanced" checked={advanced} onCheckedChange={toggleAdvanced} />
+            <Label htmlFor="advanced" className="text-sm">Show advanced settings</Label>
+          </div>
+        } />
+      {!advanced && (
+        <p className="-mt-3 mb-4 text-xs text-muted-foreground">AI model, news sources, and other technical options are under “Show advanced settings”.</p>
+      )}
       <div className="grid gap-4 lg:grid-cols-2">
         {!demo && <ConnectionCard />}
 
@@ -71,18 +100,17 @@ export default function Settings() {
           </CardContent>
         </Card>
 
-        <SectionCard title="Publishing" description="Threads account and limits" dirty={dirty('publishing')} onSave={() => save('publishing', 'publishing')}>
-          <Field label="Threads account ID (Zernio)" hint="Run the “Find Zernio Threads Account ID” workflow to get it.">
-            <Input value={draft.publishing.threads_account_id ?? ''} onChange={(e) => set('publishing', { threads_account_id: e.target.value.trim() || null })} placeholder="e.g. 66b2e19d8c3f5a7e9d0b1c2d" />
-          </Field>
+        <SectionCard title="Publishing" description="The Threads account itself is set in GitHub (repository variable THREADS_ACCOUNT_ID), not here." dirty={dirty('publishing')} onSave={() => save('publishing', 'publishing')}>
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="Username"><Input value={draft.publishing.threads_username ?? ''} onChange={(e) => set('publishing', { threads_username: e.target.value })} /></Field>
             <Field label="Max posts per run"><Input type="number" min={0} max={10} value={draft.publishing.max_posts_per_run} onChange={(e) => set('publishing', { max_posts_per_run: num(e.target.value) })} /></Field>
             <Field label="Max posts in a thread"><Input type="number" min={2} max={20} value={draft.publishing.max_thread_posts ?? 6} onChange={(e) => set('publishing', { max_thread_posts: num(e.target.value) })} /></Field>
           </div>
-          <Field label="Repetition threshold" hint="Similarity (0–1) to recent posts that triggers a high-severity warning.">
-            <Input type="number" step={0.05} min={0} max={1} value={draft.publishing.repetition_threshold ?? 0.6} onChange={(e) => set('publishing', { repetition_threshold: num(e.target.value) })} />
-          </Field>
+          {advanced && (
+            <Field label="Repetition threshold" hint="Similarity (0–1) to recent posts that triggers a high-severity warning.">
+              <Input type="number" step={0.05} min={0} max={1} value={draft.publishing.repetition_threshold ?? 0.6} onChange={(e) => set('publishing', { repetition_threshold: num(e.target.value) })} />
+            </Field>
+          )}
         </SectionCard>
 
         <SectionCard title="Quality thresholds" description="Internal evaluation scores required for automatic publishing. They do not guarantee engagement." dirty={dirty('quality')} onSave={() => save('quality', 'quality')}>
@@ -94,6 +122,7 @@ export default function Settings() {
           </div>
         </SectionCard>
 
+        {advanced && (
         <SectionCard title="AI model (OpenRouter)" description="Only free models are allowed. Paid models are refused by the engine." dirty={dirty('ai')} onSave={() => save('ai', 'AI')}>
           <Field label="Default model" hint="openrouter/free routes to any free model. Pin a model ending in :free for more consistent output.">
             <Input value={draft.ai.model} onChange={(e) => set('ai', { model: e.target.value.trim() })} className="font-mono" />
@@ -122,6 +151,7 @@ export default function Settings() {
             </div>
           </details>
         </SectionCard>
+        )}
 
         <SectionCard title="Generation" description="Daily runs at 08:00 Malaysia time" dirty={dirty('generation')} onSave={() => save('generation', 'generation')}>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -148,6 +178,7 @@ export default function Settings() {
           </Field>
         </SectionCard>
 
+        {advanced && (
         <SectionCard title="Research sources" description="Free RSS feeds + Hacker News. Full article text is extracted for the top stories." dirty={dirty('research')} onSave={() => save('research', 'research')} wide>
           <div className="space-y-2">
             {draft.research.feeds.map((f, i) => (
@@ -176,6 +207,7 @@ export default function Settings() {
             <Input value={(draft.research.keywords ?? []).join(', ')} onChange={(e) => set('research', { keywords: e.target.value.split(',').map((k) => k.trim()).filter((k) => k.length >= 2) })} />
           </Field>
         </SectionCard>
+        )}
       </div>
 
       <AlertDialog open={confirmAuto} onOpenChange={setConfirmAuto}>

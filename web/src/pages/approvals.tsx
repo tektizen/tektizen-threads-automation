@@ -46,7 +46,6 @@ export default function Approvals() {
         </TabsContent>
         <TabsContent value="ready" className="space-y-4 pt-3">
           {repo.settings.publishing.kill_switch && <Pill tone="danger">Kill switch is ON: nothing will publish until it is turned off in Settings.</Pill>}
-          {!repo.settings.publishing.threads_account_id && <Pill tone="warning">Threads account ID is not set: publishing is blocked (Settings → Publishing).</Pill>}
           {groups.ready.length === 0 ? <EmptyState title="Nothing queued">Approved content waits here until the publish workflow runs.</EmptyState>
             : groups.ready.map((c) => <ApprovalCard key={c.id} item={c} onOpen={() => setSelected(c.id)} />)}
         </TabsContent>

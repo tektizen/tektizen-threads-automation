@@ -105,7 +105,7 @@ export default function Overview() {
             <Row label="Publishing">
               <Pill tone={s.publishing.kill_switch ? 'danger' : 'success'}>{s.publishing.kill_switch ? 'Kill switch ON' : 'Enabled'}</Pill>
             </Row>
-            <Row label="Threads account">{s.publishing.threads_account_id ? `@${s.publishing.threads_username}` : <Pill tone="warning">not set</Pill>}</Row>
+            <Row label="Threads account">@{s.publishing.threads_username}</Row>
             <Row label="Max posts / run">{s.publishing.max_posts_per_run}</Row>
             <Row label="Daily items">{s.generation.items_per_daily_run}</Row>
             <Row label="Model">{s.ai.model}</Row>

@@ -8,6 +8,8 @@ settings file can never enable automatic publishing.
 from __future__ import annotations
 
 import copy
+import os
+import re
 from typing import Any
 
 from . import storage
@@ -148,6 +150,21 @@ def auto_publish_allowed(settings: dict[str, Any] | None) -> bool:
     if approval_mode(settings) != AUTO_PUBLISH:
         return False
     return publishing_enabled(settings)
+
+
+_ACCOUNT_ID = re.compile(r"^[A-Za-z0-9_-]{1,64}$")
+
+
+def threads_account_id(settings: dict[str, Any] | None) -> str | None:
+    """Zernio account ID: the THREADS_ACCOUNT_ID repository variable wins; settings.json is a fallback."""
+    env = os.environ.get("THREADS_ACCOUNT_ID", "").strip()
+    if env:
+        return env if _ACCOUNT_ID.match(env) else None
+    try:
+        value = settings["publishing"].get("threads_account_id")  # type: ignore[index]
+    except (TypeError, KeyError, AttributeError):
+        return None
+    return value if isinstance(value, str) and _ACCOUNT_ID.match(value) else None
 
 
 def publishing_enabled(settings: dict[str, Any] | None) -> bool:

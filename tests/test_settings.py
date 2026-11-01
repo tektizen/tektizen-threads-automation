@@ -53,3 +53,15 @@ def test_invalid_mode_in_file_is_rejected(repo):
     (repo / "data" / "settings.json").write_text(json.dumps(doc), encoding="utf-8")
     with pytest.raises(storage.DataError):
         settings.load_settings()
+
+
+def test_threads_account_id_prefers_repository_variable(monkeypatch):
+    s = settings.default_settings()
+    monkeypatch.delenv("THREADS_ACCOUNT_ID", raising=False)
+    assert settings.threads_account_id(s) is None
+    s["publishing"]["threads_account_id"] = "fromsettings123"
+    assert settings.threads_account_id(s) == "fromsettings123"
+    monkeypatch.setenv("THREADS_ACCOUNT_ID", "66b2e19d8c3f5a7e9d0b1c2d")
+    assert settings.threads_account_id(s) == "66b2e19d8c3f5a7e9d0b1c2d"
+    monkeypatch.setenv("THREADS_ACCOUNT_ID", "bad id; rm -rf")
+    assert settings.threads_account_id(s) is None

@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from .. import checks
-from ..settings import AUTO_PUBLISH, approval_mode, publishing_enabled
+from ..settings import AUTO_PUBLISH, approval_mode, publishing_enabled, threads_account_id
 from ..util import content_hash
 
 
@@ -55,8 +55,8 @@ def publish_gate(item: dict[str, Any], settings: dict[str, Any], *, published_ha
     pub = settings.get("publishing") or {}
     if not publishing_enabled(settings):
         return Verdict(False, ["publishing kill switch is ON"])
-    if not pub.get("threads_account_id"):
-        reasons.append("Threads account ID is not configured")
+    if not threads_account_id(settings):
+        reasons.append("Threads account ID is not configured (repository variable THREADS_ACCOUNT_ID)")
     if published_this_run >= int(pub.get("max_posts_per_run", 0)):
         reasons.append(f"per-run publishing limit reached ({pub.get('max_posts_per_run', 0)})")
     if item.get("status") != "READY_TO_PUBLISH":

@@ -128,7 +128,7 @@ Code enforces what prompts ask for: post length ≤ 500, post count per format, 
 ## Zernio (verified against docs.zernio.com, 2026-11-01)
 
 - Base `https://zernio.com/api/v1`, `Authorization: Bearer $ZERNIO_API_KEY`.
-- Account ID: `GET /v1/accounts?platform=threads` → `accounts[]._id`. Stored in `settings.publishing.threads_account_id`.
+- Account ID: `GET /v1/accounts?platform=threads` → `accounts[]._id`. Set as the GitHub repository variable `THREADS_ACCOUNT_ID` (or a secret of that name), passed to the publish workflow. `settings.publishing.threads_account_id` is only a fallback and isn't shown in the dashboard.
 - Publish: `POST /v1/posts` with `platforms: [{platform: "threads", accountId, platformSpecificData}]` and `publishNow: true`.
 - Threads sequence: `platformSpecificData.threadItems: [{content}, …]`. Item 0 is the root post; top-level `content` is then display-only.
 - Success requires `post.status == "published"` and the Threads platform entry `status == "published"`. Anything else is not success.

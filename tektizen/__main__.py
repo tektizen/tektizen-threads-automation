@@ -175,7 +175,8 @@ def cmd_accounts(_: argparse.Namespace) -> int:
         return 1
     for a in accounts:
         print(f"{a['id']}  @{a['username']}  active={a['is_active']}  needs_reconnection={a['needs_reconnection']}")
-    print("\nPut the ID of @tektizen into Settings → Publishing → Threads account ID.")
+    print("\nAdd the ID of @tektizen as a repository variable named THREADS_ACCOUNT_ID\n"
+          "(repo Settings → Secrets and variables → Actions → Variables tab).")
     return 0
 
 

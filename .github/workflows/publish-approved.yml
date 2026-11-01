@@ -29,6 +29,8 @@ jobs:
       - name: Publish
         env:
           ZERNIO_API_KEY: ${{ secrets.ZERNIO_API_KEY }}
+          # Repository variable (or secret, if you prefer) holding the Zernio account ID for @tektizen.
+          THREADS_ACCOUNT_ID: ${{ vars.THREADS_ACCOUNT_ID || secrets.THREADS_ACCOUNT_ID }}
           IN_CONTENT_ID: ${{ inputs.content_id }}
         run: |
           if [ -n "$IN_CONTENT_ID" ]; then
