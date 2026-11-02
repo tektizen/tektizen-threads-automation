@@ -1,5 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-01T10:58:10Z",
-  "agents": {}
+  "updated_at": "2026-11-02T00:26:36Z",
+  "agents": {
+    "trend_researcher": {
+      "executions": 1,
+      "successes": 0,
+      "failures": 1,
+      "total_tokens": 0,
+      "last_execution_at": "2026-11-02T00:26:36Z",
+      "last_status": "failed",
+      "last_error": "OpenRouter: OPENROUTER_API_KEY is not set"
+    }
+  }
 }
