@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-10T14:41:21Z",
+  "updated_at": "2026-11-11T00:28:45Z",
   "items": [
     {
       "id": "run_0mvxxag9jp7y5yfn0",
@@ -1629,6 +1629,134 @@
           "at": "2026-11-10T14:41:21Z",
           "level": "info",
           "message": "run finished with status success"
+        }
+      ]
+    },
+    {
+      "id": "run_0mwbds174w6xfjh44",
+      "workflow": "daily-content",
+      "github_run_id": "42931614153",
+      "github_run_url": "https://github.com/tektizen/tektizen-threads-automation/actions/runs/42931614153",
+      "trigger": "schedule",
+      "started_at": "2026-11-11T00:28:35Z",
+      "completed_at": "2026-11-11T00:28:45Z",
+      "duration_ms": 9877,
+      "status": "failed",
+      "ai_requests": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "models": [],
+      "content_ids": [],
+      "errors": [
+        "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set",
+        "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+      ],
+      "warnings": [
+        "full text failed for https://openai.com/index/introducing-businesses-chatgpt: HTTPError"
+      ],
+      "log": [
+        {
+          "at": "2026-11-11T00:28:35Z",
+          "level": "info",
+          "message": "run run_0mwbds174w6xfjh44 started (daily-content, trigger=schedule)"
+        },
+        {
+          "at": "2026-11-11T00:28:36Z",
+          "level": "info",
+          "message": "feed OpenAI News: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:36Z",
+          "level": "info",
+          "message": "feed Google AI Blog: 4 items"
+        },
+        {
+          "at": "2026-11-11T00:28:36Z",
+          "level": "info",
+          "message": "feed Hugging Face Blog: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:37Z",
+          "level": "info",
+          "message": "feed GitHub Blog: 2 items"
+        },
+        {
+          "at": "2026-11-11T00:28:37Z",
+          "level": "info",
+          "message": "feed TechCrunch AI: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:37Z",
+          "level": "info",
+          "message": "feed The Verge AI: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:37Z",
+          "level": "info",
+          "message": "feed Ars Technica: 2 items"
+        },
+        {
+          "at": "2026-11-11T00:28:37Z",
+          "level": "info",
+          "message": "feed MIT Technology Review AI: 6 items"
+        },
+        {
+          "at": "2026-11-11T00:28:40Z",
+          "level": "info",
+          "message": "feed Amanz: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:40Z",
+          "level": "info",
+          "message": "feed SoyaCincau: 0 items"
+        },
+        {
+          "at": "2026-11-11T00:28:41Z",
+          "level": "info",
+          "message": "feed Lowyat.NET: 1 items"
+        },
+        {
+          "at": "2026-11-11T00:28:41Z",
+          "level": "info",
+          "message": "feed Google News — AI Malaysia: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:42Z",
+          "level": "info",
+          "message": "feed Google News — Kecerdasan Buatan: 8 items"
+        },
+        {
+          "at": "2026-11-11T00:28:42Z",
+          "level": "info",
+          "message": "Hacker News: 15 items"
+        },
+        {
+          "at": "2026-11-11T00:28:45Z",
+          "level": "warning",
+          "message": "full text failed for https://openai.com/index/introducing-businesses-chatgpt: HTTPError"
+        },
+        {
+          "at": "2026-11-11T00:28:45Z",
+          "level": "info",
+          "message": "research: 86 fetched, 12 candidates, 4 with full text"
+        },
+        {
+          "at": "2026-11-11T00:28:45Z",
+          "level": "error",
+          "message": "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-11T00:28:45Z",
+          "level": "error",
+          "message": "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-11T00:28:45Z",
+          "level": "info",
+          "message": "run finished with status failed"
         }
       ]
     }
