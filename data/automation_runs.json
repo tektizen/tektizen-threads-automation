@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-13T14:42:22Z",
+  "updated_at": "2026-11-14T00:29:45Z",
   "items": [
     {
       "id": "run_0mvxxag9jp7y5yfn0",
@@ -2147,6 +2147,127 @@
           "at": "2026-11-13T14:42:22Z",
           "level": "info",
           "message": "run finished with status success"
+        }
+      ]
+    },
+    {
+      "id": "run_0mwfo4vjq5cm9uoy5",
+      "workflow": "daily-content",
+      "github_run_id": "43534519068",
+      "github_run_url": "https://github.com/tektizen/tektizen-threads-automation/actions/runs/43534519068",
+      "trigger": "schedule",
+      "started_at": "2026-11-14T00:29:35Z",
+      "completed_at": "2026-11-14T00:29:45Z",
+      "duration_ms": 10166,
+      "status": "failed",
+      "ai_requests": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "models": [],
+      "content_ids": [],
+      "errors": [
+        "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set",
+        "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+      ],
+      "warnings": [],
+      "log": [
+        {
+          "at": "2026-11-14T00:29:35Z",
+          "level": "info",
+          "message": "run run_0mwfo4vjq5cm9uoy5 started (daily-content, trigger=schedule)"
+        },
+        {
+          "at": "2026-11-14T00:29:36Z",
+          "level": "info",
+          "message": "feed OpenAI News: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:36Z",
+          "level": "info",
+          "message": "feed Google AI Blog: 7 items"
+        },
+        {
+          "at": "2026-11-14T00:29:36Z",
+          "level": "info",
+          "message": "feed Hugging Face Blog: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:37Z",
+          "level": "info",
+          "message": "feed GitHub Blog: 1 items"
+        },
+        {
+          "at": "2026-11-14T00:29:37Z",
+          "level": "info",
+          "message": "feed TechCrunch AI: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:37Z",
+          "level": "info",
+          "message": "feed The Verge AI: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:37Z",
+          "level": "info",
+          "message": "feed Ars Technica: 1 items"
+        },
+        {
+          "at": "2026-11-14T00:29:37Z",
+          "level": "info",
+          "message": "feed MIT Technology Review AI: 4 items"
+        },
+        {
+          "at": "2026-11-14T00:29:40Z",
+          "level": "info",
+          "message": "feed Amanz: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:41Z",
+          "level": "info",
+          "message": "feed SoyaCincau: 2 items"
+        },
+        {
+          "at": "2026-11-14T00:29:41Z",
+          "level": "info",
+          "message": "feed Lowyat.NET: 1 items"
+        },
+        {
+          "at": "2026-11-14T00:29:42Z",
+          "level": "info",
+          "message": "feed Google News — AI Malaysia: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:42Z",
+          "level": "info",
+          "message": "feed Google News — Kecerdasan Buatan: 8 items"
+        },
+        {
+          "at": "2026-11-14T00:29:42Z",
+          "level": "info",
+          "message": "Hacker News: 15 items"
+        },
+        {
+          "at": "2026-11-14T00:29:45Z",
+          "level": "info",
+          "message": "research: 87 fetched, 12 candidates, 4 with full text"
+        },
+        {
+          "at": "2026-11-14T00:29:45Z",
+          "level": "error",
+          "message": "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-14T00:29:45Z",
+          "level": "error",
+          "message": "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-14T00:29:45Z",
+          "level": "info",
+          "message": "run finished with status failed"
         }
       ]
     }
