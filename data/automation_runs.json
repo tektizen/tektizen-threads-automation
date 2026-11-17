@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-16T16:02:58Z",
+  "updated_at": "2026-11-17T00:34:51Z",
   "items": [
     {
       "id": "run_0mvxxag9jp7y5yfn0",
@@ -2645,6 +2645,141 @@
           "at": "2026-11-16T16:02:58Z",
           "level": "info",
           "message": "run finished with status success"
+        }
+      ]
+    },
+    {
+      "id": "run_0mwjymzen8uthuypl",
+      "workflow": "daily-content",
+      "github_run_id": "43988713219",
+      "github_run_url": "https://github.com/tektizen/tektizen-threads-automation/actions/runs/43988713219",
+      "trigger": "schedule",
+      "started_at": "2026-11-17T00:34:41Z",
+      "completed_at": "2026-11-17T00:34:51Z",
+      "duration_ms": 9807,
+      "status": "failed",
+      "ai_requests": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "models": [],
+      "content_ids": [],
+      "errors": [
+        "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set",
+        "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+      ],
+      "warnings": [
+        "feed Google News — AI Malaysia failed: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=artificial+intelligence+Malaysia&hl=en-MY&gl=MY&ceid=MY:en",
+        "full text failed for https://openai.com/index/expanding-chatgpt-for-academic-researchers: HTTPError",
+        "full text failed for https://openai.com/index/science-at-the-frontier: HTTPError"
+      ],
+      "log": [
+        {
+          "at": "2026-11-17T00:34:41Z",
+          "level": "info",
+          "message": "run run_0mwjymzen8uthuypl started (daily-content, trigger=schedule)"
+        },
+        {
+          "at": "2026-11-17T00:34:41Z",
+          "level": "info",
+          "message": "feed OpenAI News: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed Google AI Blog: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed Hugging Face Blog: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed GitHub Blog: 1 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed TechCrunch AI: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed The Verge AI: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:42Z",
+          "level": "info",
+          "message": "feed Ars Technica: 2 items"
+        },
+        {
+          "at": "2026-11-17T00:34:43Z",
+          "level": "info",
+          "message": "feed MIT Technology Review AI: 4 items"
+        },
+        {
+          "at": "2026-11-17T00:34:45Z",
+          "level": "info",
+          "message": "feed Amanz: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:46Z",
+          "level": "info",
+          "message": "feed SoyaCincau: 0 items"
+        },
+        {
+          "at": "2026-11-17T00:34:46Z",
+          "level": "info",
+          "message": "feed Lowyat.NET: 0 items"
+        },
+        {
+          "at": "2026-11-17T00:34:47Z",
+          "level": "warning",
+          "message": "feed Google News — AI Malaysia failed: HTTPError: 429 Client Error: Too Many Requests for url: https://news.google.com/rss/search?q=artificial+intelligence+Malaysia&hl=en-MY&gl=MY&ceid=MY:en"
+        },
+        {
+          "at": "2026-11-17T00:34:47Z",
+          "level": "info",
+          "message": "feed Google News — Kecerdasan Buatan: 8 items"
+        },
+        {
+          "at": "2026-11-17T00:34:47Z",
+          "level": "info",
+          "message": "Hacker News: 10 items"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "warning",
+          "message": "full text failed for https://openai.com/index/expanding-chatgpt-for-academic-researchers: HTTPError"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "warning",
+          "message": "full text failed for https://openai.com/index/science-at-the-frontier: HTTPError"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "info",
+          "message": "research: 73 fetched, 12 candidates, 4 with full text"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "error",
+          "message": "trend_researcher: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "error",
+          "message": "run aborted: AgentFailure: OpenRouter: OPENROUTER_API_KEY is not set"
+        },
+        {
+          "at": "2026-11-17T00:34:51Z",
+          "level": "info",
+          "message": "run finished with status failed"
         }
       ]
     }
