@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-23T04:32:11Z",
+  "updated_at": "2026-11-24T01:25:31Z",
   "items": [
     {
       "id": "run_0mvxxag9jp7y5yfn0",
@@ -3803,6 +3803,51 @@
           "at": "2026-11-23T04:32:11Z",
           "level": "info",
           "message": "run finished with status failed"
+        }
+      ]
+    },
+    {
+      "id": "run_0mwu0jbpckhkgaz5y",
+      "workflow": "performance-analysis",
+      "github_run_id": "45304912149",
+      "github_run_url": "https://github.com/tektizen/tektizen-threads-automation/actions/runs/45304912149",
+      "trigger": "schedule",
+      "started_at": "2026-11-24T01:25:31Z",
+      "completed_at": "2026-11-24T01:25:31Z",
+      "duration_ms": 154,
+      "status": "success",
+      "ai_requests": 0,
+      "tokens": {
+        "prompt": 0,
+        "completion": 0,
+        "total": 0
+      },
+      "models": [],
+      "content_ids": [],
+      "errors": [],
+      "warnings": [
+        "ZERNIO_API_KEY not set; skipping metrics collection"
+      ],
+      "log": [
+        {
+          "at": "2026-11-24T01:25:31Z",
+          "level": "info",
+          "message": "run run_0mwu0jbpckhkgaz5y started (performance-analysis, trigger=schedule)"
+        },
+        {
+          "at": "2026-11-24T01:25:31Z",
+          "level": "warning",
+          "message": "ZERNIO_API_KEY not set; skipping metrics collection"
+        },
+        {
+          "at": "2026-11-24T01:25:31Z",
+          "level": "info",
+          "message": "learning: no new feedback or metrics since last analysis; skipping AI call"
+        },
+        {
+          "at": "2026-11-24T01:25:31Z",
+          "level": "info",
+          "message": "run finished with status success"
         }
       ]
     }
